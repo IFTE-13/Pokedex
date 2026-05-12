@@ -7,11 +7,12 @@ interface PokemonCardProps {
   name: string
   image: string
   id: number
+  originalName: string
 }
 
-export function PokemonCard({ name, image, id }: PokemonCardProps) {
+export function PokemonCard({ name, image, id, originalName }: PokemonCardProps) {
   return (
-    <Link href={`/pokemon/${name}`}>
+    <Link href={`/pokemon/${originalName}`}>
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow cursor-pointer">
         <div className="aspect-square relative mb-3">
           <Image
@@ -20,7 +21,7 @@ export function PokemonCard({ name, image, id }: PokemonCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-contain"
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <div className="text-center">
