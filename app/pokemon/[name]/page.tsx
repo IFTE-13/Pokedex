@@ -7,6 +7,8 @@ import { usePokemonDetails } from '@/hooks/usePokemon'
 import { typeColors, statNames } from '@/lib/constants/pokemon'
 import Image from 'next/image'
 import NotFound from '@/app/not-found'
+import { EvolutionChain } from '@/components/evolutionChain'
+import { useEffect, useState } from 'react'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -21,6 +23,33 @@ export default function PokemonPage() {
   const params = useParams()
   const name = params.name as string
   const { pokemon, loading, error } = usePokemonDetails(name)
+  const [speciesUrl, setSpeciesUrl] = useState<string>('')
+
+  useEffect(() => {
+    const fetchSpecies = async () => {
+      if (pokemon) {
+        try {
+          // The species API endpoint is predictable
+          const speciesEndpoint = `https://pokeapi.co/api/v2/pokemon-species/${name}`
+          console.log('Fetching species from:', speciesEndpoint)
+          
+          const response = await fetch(speciesEndpoint)
+          const data = await response.json()
+          
+          // The evolution chain URL is directly in the response
+          console.log('Evolution chain URL:', data.evolution_chain?.url)
+          
+          // Store the evolution chain URL directly, not the species URL
+          if (data.evolution_chain?.url) {
+            setSpeciesUrl(data.evolution_chain.url)
+          }
+        } catch (error) {
+          console.error('Error fetching species:', error)
+        }
+      }
+    }
+    fetchSpecies()
+  }, [pokemon, name])
 
   if (loading) {
     return (
@@ -40,7 +69,7 @@ export default function PokemonPage() {
                    pokemon.sprites.front_default
 
   return (
-    <div className="min-h-[calc(100vh-80px)] overflow-hidden">
+    <div className=" overflow-hidden">
       <div className="container mx-auto px-4 h-full">
         <Link 
           href="/" 
@@ -144,6 +173,16 @@ export default function PokemonPage() {
             </div>
           </div>
         </div>
+        <div className="mt-12">
+        {speciesUrl && (
+          <section className="pb-8 border-t border-border">
+            <EvolutionChain 
+              speciesName={name}
+              evolutionChainUrl={speciesUrl}
+            />
+          </section>
+        )}
+      </div>
       </div>
     </div>
   )
