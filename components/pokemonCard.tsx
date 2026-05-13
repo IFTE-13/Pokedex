@@ -13,7 +13,7 @@ interface PokemonCardProps {
 export function PokemonCard({ name, image, id, originalName }: PokemonCardProps) {
   return (
     <Link href={`/pokemon/${originalName}`}>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-all cursor-pointer border border-border/50 hover:border-primary/50">
         <div className="aspect-square relative mb-3">
           <Image
             src={image}

@@ -182,7 +182,7 @@ function EvolutionNodeDesktop({
           {evolutionDetail && (
             <Button
               onClick={() => onViewDetails(name, evolutionDetail)}
-              className="text-xs text-blue-500 hover:text-blue-600 flex items-center gap-1 cursor-pointer"
+              className="text-xs text-blue-500 hover:text-blue-600 flex items-center gap-1 cursor-pointer bg-background hover:bg-background"
             >
               <TrendingUp className="h-3 w-3" />
               Evolution details
@@ -249,13 +249,13 @@ function EvolutionNodeMobile({
       </Link>
       <div className="h-8 mt-2">
         {evolutionDetail && (
-          <button
+          <Button
             onClick={() => onViewDetails(name, evolutionDetail)}
-            className="text-sm text-blue-500 hover:text-blue-600 flex items-center gap-1"
+            className="text-sm text-blue-500 hover:text-blue-600 flex items-center gap-1 bg-background hover:bg-background cursor-pointer"
           >
             <TrendingUp className="h-3 w-3" />
             Evolution details
-          </button>
+          </Button>
         )}
       </div>
 
