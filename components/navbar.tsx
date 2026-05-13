@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ThemeToggler } from './themeToggler'
 import { SearchBar } from './SearchBar'
 import Image from 'next/image'
+import { AudioControls } from './audioControls'
 
 const Navbar = () => {
   return (
@@ -23,6 +24,7 @@ const Navbar = () => {
           
           <div className="flex items-center gap-2 shrink-0">
             <SearchBar />
+            <AudioControls />
             <ThemeToggler variant={"circle"} fromCenter />
           </div>
         </div>

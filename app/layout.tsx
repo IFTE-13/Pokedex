@@ -3,6 +3,7 @@ import { Orbitron } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar";
+import { AudioProvider } from '@/context/audioContext'
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -31,8 +32,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <AudioProvider>
         <Navbar />
         {children}
+        </AudioProvider>
         </ThemeProvider>
       </body>
     </html>

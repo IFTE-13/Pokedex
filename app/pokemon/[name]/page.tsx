@@ -9,6 +9,7 @@ import Image from 'next/image'
 import NotFound from '@/app/not-found'
 import { EvolutionChain } from '@/components/evolutionChain'
 import { useEffect, useState } from 'react'
+import { CryButton } from '@/components/cryButton'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -104,6 +105,7 @@ export default function PokemonPage() {
                     {type.type.name}
                   </span>
                 ))}
+                <CryButton pokemonId={pokemon.id} pokemonName={pokemon.name} />
               </div>
               <h1 className="text-7xl font-bold capitalize">
                 {pokemon.name}
