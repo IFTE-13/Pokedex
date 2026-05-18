@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar";
 import { AudioProvider } from '@/context/audioContext'
+import { Toaster } from "@/components/ui/sonner"
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -33,9 +34,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AudioProvider>
-        <Navbar />
-        {children}
-        </AudioProvider>
+              <Navbar />
+              {children}
+              <Toaster position="bottom-right" richColors />
+            </AudioProvider>
         </ThemeProvider>
       </body>
     </html>

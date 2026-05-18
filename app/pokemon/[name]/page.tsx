@@ -10,6 +10,8 @@ import NotFound from '@/app/not-found'
 import { EvolutionChain } from '@/components/evolutionChain'
 import { useEffect, useState } from 'react'
 import { CryButton } from '@/components/cryButton'
+import { TypeEffectivenessChart } from '@/components/typeEffectivenessChart'
+import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -24,23 +26,18 @@ export default function PokemonPage() {
   const params = useParams()
   const name = params.name as string
   const { pokemon, loading, error } = usePokemonDetails(name)
+  const [imageError, setImageError] = useState(false)
   const [speciesUrl, setSpeciesUrl] = useState<string>('')
 
   useEffect(() => {
     const fetchSpecies = async () => {
       if (pokemon) {
         try {
-          // The species API endpoint is predictable
           const speciesEndpoint = `https://pokeapi.co/api/v2/pokemon-species/${name}`
-          console.log('Fetching species from:', speciesEndpoint)
           
           const response = await fetch(speciesEndpoint)
           const data = await response.json()
           
-          // The evolution chain URL is directly in the response
-          console.log('Evolution chain URL:', data.evolution_chain?.url)
-          
-          // Store the evolution chain URL directly, not the species URL
           if (data.evolution_chain?.url) {
             setSpeciesUrl(data.evolution_chain.url)
           }
@@ -66,8 +63,9 @@ export default function PokemonPage() {
     )
   }
 
-  const imageUrl = pokemon.sprites.other['official-artwork']?.front_default || 
-                   pokemon.sprites.front_default
+  const originalImage = pokemon.sprites.other['official-artwork']?.front_default || 
+                        pokemon.sprites.front_default
+  const imageUrl = imageError ? FALLBACK_IMAGES.official : getValidImageUrl(originalImage)
 
   return (
     <div className=" overflow-hidden">
@@ -88,6 +86,8 @@ export default function PokemonPage() {
                 alt={pokemon.name}
                 fill
                 className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                onError={() => setImageError(true)}
                 priority
               />
             </div>
@@ -175,6 +175,9 @@ export default function PokemonPage() {
             </div>
           </div>
         </div>
+        <div className="mt-6">
+  <TypeEffectivenessChart pokemonTypes={pokemon.types.map(t => t.type.name)} />
+</div>
         <div className="mt-12">
         {speciesUrl && (
           <section className="pb-8 border-t border-border">

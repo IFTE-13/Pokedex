@@ -1,5 +1,6 @@
 import { PokemonDetail, PokemonCardData } from '@/lib/types/pokemon'
 import { POKEMON_API } from '@/lib/constants/pokemon'
+import { getValidImageUrl } from '../utils/imageUtils'
 
 class PokemonService {
   private baseUrl: string
@@ -36,7 +37,22 @@ class PokemonService {
 
   async getPokemonDetails(name: string): Promise<PokemonDetail | null> {
     const url = `${this.baseUrl}/pokemon/${name.toLowerCase()}`
-    return this.fetchWithError<PokemonDetail>(url)
+    const data = await this.fetchWithError<PokemonDetail>(url)
+    
+    if (data) {
+      if (data.sprites) {
+        if (data.sprites.other?.['official-artwork']?.front_default) {
+          data.sprites.other['official-artwork'].front_default = 
+            getValidImageUrl(data.sprites.other['official-artwork'].front_default)
+        }
+        
+        if (data.sprites.front_default) {
+          data.sprites.front_default = getValidImageUrl(data.sprites.front_default)
+        }
+      }
+    }
+    
+    return data
   }
 
   async getLocalizedPokemonList(
@@ -51,11 +67,15 @@ class PokemonService {
         const pokemonData = await this.getPokemonDetails(pokemon.name)
         if (!pokemonData) return null
 
+        let image = pokemonData.sprites.other['official-artwork']?.front_default || 
+                    pokemonData.sprites.front_default
+        
+        image = getValidImageUrl(image)
+
         return {
           name: pokemon.name,
           originalName: pokemon.name,
-          image: pokemonData.sprites.other['official-artwork']?.front_default || 
-                 pokemonData.sprites.front_default,
+          image: image,
           id: pokemonData.id,
         }
       })

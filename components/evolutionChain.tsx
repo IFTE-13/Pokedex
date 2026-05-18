@@ -166,6 +166,8 @@ function EvolutionNodeDesktop({
                   alt={name}
                   fill
                   className="object-contain p-2"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  loading='eager'
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
@@ -236,6 +238,8 @@ function EvolutionNodeMobile({
                 alt={name}
                 fill
                 className="object-contain p-2"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading='eager'
               />
             ) : (
               <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />

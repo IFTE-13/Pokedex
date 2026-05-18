@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
+import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
 
 interface PokemonCardProps {
   name: string
@@ -11,17 +13,21 @@ interface PokemonCardProps {
 }
 
 export function PokemonCard({ name, image, id, originalName }: PokemonCardProps) {
+  const [imgError, setImgError] = useState(false)
+  
+  const imageSrc = imgError ? FALLBACK_IMAGES.official : getValidImageUrl(image)
+
   return (
     <Link href={`/pokemon/${originalName}`}>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-all cursor-pointer border border-border/50 hover:border-primary/50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow cursor-pointer">
         <div className="aspect-square relative mb-3">
           <Image
-            src={image}
+            src={imageSrc}
             alt={name}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-contain"
-            loading="eager"
+            onError={() => setImgError(true)}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         <div className="text-center">
