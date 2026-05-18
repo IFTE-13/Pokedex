@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { CryButton } from '@/components/cryButton'
 import { TypeEffectivenessChart } from '@/components/typeEffectivenessChart'
 import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
+import { PokemonQRCode } from '@/components/pokemonQRCode'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -106,6 +107,10 @@ export default function PokemonPage() {
                   </span>
                 ))}
                 <CryButton pokemonId={pokemon.id} pokemonName={pokemon.name} />
+                <PokemonQRCode
+                  pokemonName={pokemon.name}
+                  pokemonId={pokemon.id}
+                />
               </div>
               <h1 className="text-7xl font-bold capitalize">
                 {pokemon.name}
