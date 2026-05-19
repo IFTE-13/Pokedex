@@ -1,50 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { pokemonService } from '@/lib/services/pokemonService'
-import { ApiResponse, PokemonListData } from '@/lib/types/pokemon'
-import { POKEMON_API } from '@/lib/constants/pokemon'
 
-export async function GET(request: NextRequest) {
+interface DetailedPokemon {
+  id: number
+  name: string
+  originalName: string
+  image: string
+  types: string[]
+  stats: { name: string; value: number }[]
+  height: number
+  weight: number
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const searchParams = request.nextUrl.searchParams
     const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || POKEMON_API.DEFAULT_LIMIT.toString())
+    const limit = parseInt(searchParams.get('limit') || '20')
     const offset = (page - 1) * limit
 
-    if (limit > POKEMON_API.MAX_LIMIT) {
-      return NextResponse.json<ApiResponse<null>>({
-        success: false,
-        error: `Limit cannot exceed ${POKEMON_API.MAX_LIMIT}`,
-      }, { status: 400 })
-    }
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
+    const data = await response.json()
+    
+    const detailedResults: DetailedPokemon[] = await Promise.all(
+      data.results.map(async (pokemon: { name: string; url: string }) => {
+        const detailsRes = await fetch(pokemon.url)
+        const details = await detailsRes.json()
+        
+        return {
+          id: details.id as number,
+          name: pokemon.name,
+          originalName: pokemon.name,
+          image: (details.sprites.other?.['official-artwork']?.front_default as string) || 
+                 (details.sprites.front_default as string) || 
+                 '',
+          types: (details.types as Array<{ type: { name: string } }>).map(t => t.type.name),
+          stats: (details.stats as Array<{ stat: { name: string }; base_stat: number }>).map(s => ({ 
+            name: s.stat.name, 
+            value: s.base_stat 
+          })),
+          height: details.height as number,
+          weight: details.weight as number
+        }
+      })
+    )
 
-    const [pokemonList, totalData] = await Promise.all([
-      pokemonService.getLocalizedPokemonList(limit, offset),
-      pokemonService.getPokemonList(1, 0),
-    ])
+    const totalPages = Math.ceil(data.count / limit)
 
-    const totalCount = totalData?.count || 0
-    const totalPages = Math.ceil(totalCount / limit)
-
-    const responseData: PokemonListData = {
-      results: pokemonList,
-      pagination: {
-        currentPage: page,
-        totalPages,
-        totalCount,
-        itemsPerPage: limit,
-      },
-    }
-
-    return NextResponse.json<ApiResponse<PokemonListData>>({
+    return NextResponse.json({
       success: true,
-      data: responseData,
-      timestamp: new Date().toISOString(),
+      data: {
+        results: detailedResults,
+        pagination: {
+          currentPage: page,
+          totalPages,
+          totalCount: data.count,
+          itemsPerPage: limit
+        }
+      }
     })
   } catch (error) {
     console.error('API Error:', error)
-    return NextResponse.json<ApiResponse<null>>({
+    return NextResponse.json({
       success: false,
-      error: 'Internal server error',
+      error: 'Internal server error'
     }, { status: 500 })
   }
 }
