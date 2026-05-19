@@ -13,6 +13,7 @@ import { CryButton } from '@/components/cryButton'
 import { TypeEffectivenessChart } from '@/components/typeEffectivenessChart'
 import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
 import { PokemonQRCode } from '@/components/pokemonQRCode'
+import { useRecentlyViewed } from '@/context/recentlyViewedContext'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -29,6 +30,8 @@ export default function PokemonPage() {
   const { pokemon, loading, error } = usePokemonDetails(name)
   const [imageError, setImageError] = useState(false)
   const [speciesUrl, setSpeciesUrl] = useState<string>('')
+
+  const { addRecentlyViewed } = useRecentlyViewed()
 
   useEffect(() => {
     const fetchSpecies = async () => {
@@ -50,6 +53,23 @@ export default function PokemonPage() {
     fetchSpecies()
   }, [pokemon, name])
 
+  useEffect(() => {
+    if (pokemon) {
+      const originalImage = pokemon.sprites.other['official-artwork']?.front_default || 
+                            pokemon.sprites.front_default
+      const imageUrl = imageError ? FALLBACK_IMAGES.official : getValidImageUrl(originalImage)
+      
+      addRecentlyViewed({
+        id: pokemon.id,
+        name: pokemon.name,
+        image: imageUrl,
+        types: pokemon.types.map(t => t.type.name),
+        viewedAt: Date.now()
+      })
+    }
+  }, [pokemon, addRecentlyViewed, imageError])
+
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -67,6 +87,10 @@ export default function PokemonPage() {
   const originalImage = pokemon.sprites.other['official-artwork']?.front_default || 
                         pokemon.sprites.front_default
   const imageUrl = imageError ? FALLBACK_IMAGES.official : getValidImageUrl(originalImage)
+
+   
+
+  
 
   return (
     <div className=" overflow-hidden">

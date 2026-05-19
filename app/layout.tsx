@@ -5,6 +5,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar";
 import { AudioProvider } from '@/context/audioContext'
 import { Toaster } from "@/components/ui/sonner"
+import { FavoritesProvider } from '@/context/favoritesContext'
+import { RecentlyViewedProvider } from '@/context/recentlyViewedContext'
+import { ComparisonProvider } from '@/context/comparisonContext'
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -33,11 +36,17 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <FavoritesProvider>
+            <RecentlyViewedProvider>
+              <ComparisonProvider>
             <AudioProvider>
               <Navbar />
               {children}
               <Toaster position="bottom-right" richColors />
             </AudioProvider>
+            </ComparisonProvider>
+            </RecentlyViewedProvider>
+          </FavoritesProvider>
         </ThemeProvider>
       </body>
     </html>
