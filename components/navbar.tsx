@@ -36,7 +36,7 @@ const Navbar = () => {
                 <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
                 {favoriteCount > 0 && (
                   <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-white text-[10px] sm:text-xs flex items-center justify-center">
-                    {favoriteCount > 9 ? '9+' : favoriteCount}
+                    {favoriteCount}
                   </span>
                 )}
               </Button>

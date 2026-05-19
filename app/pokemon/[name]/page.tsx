@@ -14,6 +14,7 @@ import { TypeEffectivenessChart } from '@/components/typeEffectivenessChart'
 import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
 import { PokemonQRCode } from '@/components/pokemonQRCode'
 import { useRecentlyViewed } from '@/context/recentlyViewedContext'
+import { LocationData } from '@/components/habitatData'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -205,8 +206,11 @@ export default function PokemonPage() {
           </div>
         </div>
         <div className="mt-6">
-  <TypeEffectivenessChart pokemonTypes={pokemon.types.map(t => t.type.name)} />
-</div>
+          <TypeEffectivenessChart pokemonTypes={pokemon.types.map(t => t.type.name)} />
+        </div>
+        <div className="mt-6">
+          <LocationData pokemonName={pokemon.name} />
+        </div>
         <div className="mt-12">
         {speciesUrl && (
           <section className="pb-8 border-t border-border">

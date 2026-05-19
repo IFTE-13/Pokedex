@@ -57,3 +57,12 @@ export interface PokemonListData {
   results: PokemonCardData[]
   pagination: PaginationInfo
 }
+
+export interface PokemonHabitat {
+  id: number
+  name: string
+  names: {
+    name: string
+    language: { name: string; url: string }
+  }[]
+}

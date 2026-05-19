@@ -53,9 +53,9 @@ export default function ComparePage() {
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th className="p-3 bg-muted/50 border border-border min-w-[150px]"></th>
+              <th className="p-3 bg-muted/50 border border-border min-w-37.5"></th>
               {comparisonList.map((pokemon) => (
-                <th key={pokemon.id} className="p-3 bg-muted/50 border border-border min-w-[200px]">
+                <th key={pokemon.id} className="p-3 bg-muted/50 border border-border min-w-50">
                   <div className="relative">
                     <Button
                       variant="ghost"
