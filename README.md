@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokédex
+### The Ultimate Pokémon Encyclopedia
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-First, run the development server:
+A modern, feature-rich Pokédex web application built with Next.js 16, TypeScript, and Tailwind CSS. Browse, search, and explore detailed information about all Pokémon from Generation I to IX.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<img width="1552" height="918" alt="image" src="https://github.com/user-attachments/assets/c2d9a0af-1e7d-44c8-bc03-49ad8fb0ceff" />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Core Features
+- **Complete Pokédex** - Browse all 1025+ Pokémon with beautiful card layouts
+- **Infinite Scroll** - Seamless loading of Pokémon as you scroll
+- **Search Functionality** - Quick Pokémon search with autocomplete
+- **Responsive Design** - Works perfectly on desktop, tablet, and mobile
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Advanced Search & Filtering
+- Filter by Pokémon type (Fire, Water, Grass, etc.)
+- Filter by generation (I-IX)
+- Filter by stats (HP, Attack, Defense, Speed)
+- Sort by name, ID, stats, height, or weight
+- Combined multi-filter search
 
-## Learn More
+### Pokémon Details
+- Complete base stats with visual indicators
+- Type effectiveness chart (weaknesses/resistances)
+- Evolution chains with detailed requirements
+- Move lists by level up (with power, accuracy, PP)
+- Ability information (regular and hidden)
+- Height and weight measurements
+- Habitat information
+- Breeding data (egg groups, hatch steps, gender ratio)
 
-To learn more about Next.js, take a look at the following resources:
+### Visual Features
+- **Shiny Pokémon Showcase** - Toggle between normal and shiny sprites
+- **Type-based color schemes** - Each Pokémon card features its type colors
+- **Dark/Light mode** - Full theme support with system preference
+- **Pokémon of the Day** - Random featured Pokémon with fun facts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Audio & Interaction
+- **Pokémon Cries** - Play each Pokémon's unique cry sound
+- **QR Code Generation** - Generate and share QR codes for any Pokémon
+- **Favorites System** - Save your favorite Pokémon to local storage
+- **Recently Viewed** - Track your browsing history
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Sharing & Export
+- Share Pokémon via QR code
+- Copy Pokémon links to the clipboard
+- Generate shareable images
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 15** | React framework with App Router |
+| **TypeScript** | Type safety and better developer experience |
+| **Tailwind CSS** | Utility-first styling |
+| **shadcn/ui** | Beautiful, accessible components |
+| **Lucide Icons** | Clean icon set |
+| **Howler.js** | Audio playback for Pokémon cries |
+| **qrcode.react** | QR code generation |
+| **PokéAPI** | Pokémon data source |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Installation
+
+### Prerequisites
+- Node.js 18+ or Bun
+- npm, yarn, or pnpm
+
+## Acknowledgments
+**PokéAPI** - For providing the amazing Pokémon data API
+
+## ⭐ Show Your Support
+If you found this project helpful, please give it a star ⭐ on GitHub!
+
+[Report Bug](https://github.com/IFTE-13/Pokedex/issues) · [Request Feature](https://github.com/IFTE-13/Pokedex/issues)
