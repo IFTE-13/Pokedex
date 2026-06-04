@@ -15,6 +15,9 @@ import { getValidImageUrl, FALLBACK_IMAGES } from '@/lib/utils/imageUtils'
 import { PokemonQRCode } from '@/components/pokemonQRCode'
 import { useRecentlyViewed } from '@/context/recentlyViewedContext'
 import { LocationData } from '@/components/habitatData'
+import { EggGroups } from '@/components/eggGroups'
+import { MoveList } from '@/components/moveList'
+import { ShinyToggle } from '@/components/shinyToggle'
 
 const statIcons: Record<string, LucideIcon> = {
   hp: Heart,
@@ -204,6 +207,14 @@ export default function PokemonPage() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <EggGroups pokemonName={pokemon.name} />
+          <ShinyToggle pokemonName={pokemon.name} />
+        </div>
+
+        <div className="mt-6">
+          <MoveList pokemonName={pokemon.name} />
         </div>
         <div className="mt-6">
           <TypeEffectivenessChart pokemonTypes={pokemon.types.map(t => t.type.name)} />

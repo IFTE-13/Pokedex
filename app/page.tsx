@@ -4,6 +4,7 @@ import { PokemonCard } from '@/components/pokemonCard'
 import { ArrowUpFromDot, Loader2, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { PokemonOfTheDay } from '@/components/pokemonOfTheDay'
 
 interface PokemonData {
   name: string
@@ -144,6 +145,9 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="mb-6">
+        <PokemonOfTheDay />
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {pokemonList.map((pokemon) => (
           <PokemonCard 
