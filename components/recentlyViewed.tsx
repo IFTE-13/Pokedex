@@ -26,11 +26,9 @@ export function RecentlyViewed() {
           aria-label="Recently viewed"
         >
           <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
-          {recentlyViewed.length > 0 && (
             <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-blue-500 text-white text-[10px] sm:text-xs flex items-center justify-center">
-              {recentlyViewed.length > 9 ? '9+' : recentlyViewed.length}
+              {recentlyViewed.length}
             </span>
-          )}
         </Button>
       </SheetTrigger>
       
